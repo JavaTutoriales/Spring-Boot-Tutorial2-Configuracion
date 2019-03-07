@@ -9,7 +9,7 @@ import lombok.Getter;
 @Configuration
 @PropertySource("classpath:config/tutorial.properties")
 @Getter
-public class EjemploPropertySource {
+public class EjemploConfig {
 	@Value("${demo.valor}")
 	private String valor;
 }
