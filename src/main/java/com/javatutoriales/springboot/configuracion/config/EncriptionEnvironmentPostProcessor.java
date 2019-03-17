@@ -11,7 +11,6 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.stereotype.Component;
 
-@Component
 public class EncriptionEnvironmentPostProcessor implements EnvironmentPostProcessor {
 
 	private static final String PROPERTY_SOURCE_NAME = "secretConfig";
@@ -19,14 +18,45 @@ public class EncriptionEnvironmentPostProcessor implements EnvironmentPostProces
 	@Override
 	public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("demo.valor", environment.getProperty("demo.valor") + " modificado desde el post procesador");
-		map.put("demo.valorEnv", environment.getProperty("demo.valorEnv") + " modificado desde el post procesador");
-		addOrReplace(environment.getPropertySources(), map);
+		
+		map.put("mail.credenciales.password", descifra(environment.getProperty("mail.credenciales.password"), 6));
+		map.put("mail.hostname", descifra(environment.getProperty("mail.hostname"), 6));
+		
+		environment.getPropertySources().addFirst(new MapPropertySource(PROPERTY_SOURCE_NAME, map));
 	}
 
-	private void addOrReplace(MutablePropertySources propertySources, Map<String, Object> map) {
-		MapPropertySource target = null;
-		target = new MapPropertySource(PROPERTY_SOURCE_NAME, map);
-		propertySources.addFirst(target);
+
+	private String descifra(String valor, int shift) {
+		String s = "";
+		
+		int len = valor.length();
+		
+		for (int x = 0; x < len; x++) {
+			
+			char ch = (char) (valor.charAt(x));
+			
+			if(ch >= 'a' && ch <= 'z'){
+	            ch = (char)(ch - shift);
+	            
+	            if(ch < 'a'){
+	                ch = (char)(ch + 'z' - 'a' + 1);
+	            }
+	            
+	            s += ch;
+	        }
+	        else if(ch >= 'A' && ch <= 'Z'){
+	            ch = (char)(ch - shift);
+	            
+	            if(ch < 'A'){
+	                ch = (char)(ch + 'Z' - 'A' + 1);
+	            }
+	            
+	            s += ch;
+	        }
+	        else {
+	        	s += ch;
+	        }
+		}
+		return s;
 	}
 }

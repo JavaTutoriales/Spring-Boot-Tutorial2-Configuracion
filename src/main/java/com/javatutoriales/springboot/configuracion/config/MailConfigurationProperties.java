@@ -25,6 +25,7 @@ import lombok.ToString;
 public class MailConfigurationProperties {
 	@NotEmpty(message="El correo es un parámetro obligatorio.")
 	private String hostname;
+	private String adminMail;
 	
 	@Positive
 	private int port;
