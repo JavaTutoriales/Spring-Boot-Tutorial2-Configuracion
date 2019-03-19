@@ -10,6 +10,6 @@ import lombok.Getter;
 @PropertySource("classpath:config/tutorial.properties")
 @Getter
 public class EjemploConfig {
-	@Value("${demo.valor}")
+	@Value("${demo.valor:default}")
 	private String valor;
 }

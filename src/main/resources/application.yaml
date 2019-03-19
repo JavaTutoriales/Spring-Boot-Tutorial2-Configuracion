@@ -1,0 +1,22 @@
+demo:
+  valor: desde application.yaml dentro del jar de la aplicacion
+  valorEnv: leyendo con Evironment desde application.yaml
+ 
+mail:
+  hostname: pgbgzazuxogrky.ius
+  adminMail: programadorjavablog@gmail.com
+  port: 35
+  from: robot@javatutoriales.com
+ 
+  defaultRecipients:
+   0: admin@javatutoriales.com
+   1: owner@javatutoriales.com
+ 
+  additionalHeaders:
+   redelivery: true
+   secure: true
+  
+  credenciales:
+    host: smtp.javatutoriales.com
+    password: vgyycuxj
+    user: admin
